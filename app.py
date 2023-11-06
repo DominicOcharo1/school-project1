@@ -24,8 +24,6 @@ with st.container(): # st.title("DL POWERED PESTS AND DISEASE DETECTION IN MAIZE
         """
         <style>
         div[data-testid="stHorizontalBlock"] {
-            background-image: url("https://images.unsplash.com/photo-1542281286-9e0a16bb7366");
-            background-size: cover;
             background-color: lightgrey;
             padding: 20px;
         }
