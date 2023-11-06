@@ -23,7 +23,7 @@ with st.container(): # st.title("DL POWERED PESTS AND DISEASE DETECTION IN MAIZE
         """
         <style>
         div[data-testid="stHorizontalBlock"] {
-            background-color: lightgreen;
+            background-color: grey;
             padding: 20px;
         }
         </style>
@@ -80,7 +80,7 @@ if source_radio == settings.IMAGE:
         try:
             if source_img:
                 uploaded_image = PIL.Image.open(source_img)
-                st.image(source_img, caption=":blue[Uploaded Image]",
+                st.image(source_img, caption="Uploaded Image",
                          use_column_width=True)
         except Exception as ex:
             st.error("Error occurred while opening the image.")
@@ -93,7 +93,7 @@ if source_radio == settings.IMAGE:
                                     )
                 boxes = res[0].boxes
                 res_plotted = res[0].plot()[:, :, ::-1]
-                st.image(res_plotted, caption="<h3 style='color: black;'>Detected Image</h3>",
+                st.image(res_plotted, caption="Detected Image",
                          use_column_width=True)
                 try:
                     with st.expander("Detection Results"):
