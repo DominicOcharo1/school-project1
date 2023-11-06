@@ -19,20 +19,13 @@ st.set_page_config(
 
 # Main page heading
 with st.container(): # st.title("DL POWERED PESTS AND DISEASE DETECTION IN MAIZE")
-    st.markdown('''
-<style>
-body {
-background-image: url("https://images.unsplash.com/photo-1542281286-9e0a16bb7366");
-background-size: cover;
-}
-</style>
-''', unsafe_allow_html=True)
-
     
     st.markdown(
         """
         <style>
         div[data-testid="stHorizontalBlock"] {
+            background-image: url("https://images.unsplash.com/photo-1542281286-9e0a16bb7366");
+            background-size: cover;
             background-color: lightgrey;
             padding: 20px;
         }
