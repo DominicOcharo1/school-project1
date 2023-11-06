@@ -80,7 +80,7 @@ if source_radio == settings.IMAGE:
         try:
             if source_img:
                 uploaded_image = PIL.Image.open(source_img)
-                st.image(source_img, caption="Uploaded Image",
+                st.image(source_img, caption="<h3 style='color: black;'>Uploaded Image</h3>",
                          use_column_width=True)
         except Exception as ex:
             st.error("Error occurred while opening the image.")
@@ -93,7 +93,7 @@ if source_radio == settings.IMAGE:
                                     )
                 boxes = res[0].boxes
                 res_plotted = res[0].plot()[:, :, ::-1]
-                st.image(res_plotted, caption='Detected Image',
+                st.image(res_plotted, caption="<h3 style='color: black;'>Detected Image</h3>",
                          use_column_width=True)
                 try:
                     with st.expander("Detection Results"):
