@@ -23,7 +23,7 @@ with st.container(): # st.title("DL POWERED PESTS AND DISEASE DETECTION IN MAIZE
         """
         <style>
         div[data-testid="stHorizontalBlock"] {
-            background-color: lightblue;
+            background-color: brown;
             padding: 20px;
         }
         </style>
