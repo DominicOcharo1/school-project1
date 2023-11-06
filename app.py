@@ -19,6 +19,17 @@ st.set_page_config(
 
 # Main page heading
 with st.container(): # st.title("DL POWERED PESTS AND DISEASE DETECTION IN MAIZE")
+    st.markdown(
+        """
+        <style>
+        div[data-testid="stHorizontalBlock"] {
+            background-color: lightblue;
+            padding: 20px;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
     st.markdown("<h1 style='text-align: center; color: blue;'>DL POWERED PESTS AND DISEASE DETECTION IN MAIZE</h1>", unsafe_allow_html=True)
     st.markdown("<h2 style='text-align: center; color: black;'>By Dominic Ocharo and Shadrack Onjiri</h2>", unsafe_allow_html=True)
     
