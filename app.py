@@ -22,7 +22,7 @@ with st.container():
     st.title("DL POWERED PESTS AND DISEASE DETECTION IN MAIZE")
 
 with st.container():
-    st.write("...")
+    st.write("---")
     st.markdown('Updload a photo of an affected maize leaf.')
     st.markdown('Then click the Detect Objects button and check the result.')
 
