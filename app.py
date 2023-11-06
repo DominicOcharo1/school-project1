@@ -19,7 +19,7 @@ st.set_page_config(
 
 # Main page heading
 with st.container():
-    st.title("DL POWERED PESTS AND DISEASE DETECTION IN MAIZE")
+    st.title("DL POWERED PESTS AND DISEASE DETECTION IN MAIZE, style="text-align: center;"")
 
 with st.container():
     st.write("---")
