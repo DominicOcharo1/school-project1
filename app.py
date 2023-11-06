@@ -19,8 +19,8 @@ st.set_page_config(
 
 # Main page heading
 st.title("DL POWERED PESTS AND DISEASE DETECTION IN MAIZE")
-st.markdown('Updload a photo of an affected :blue[maize leaf].')
-st.markdown('Then click the :blue[Detect Objects] button and check the result.')
+st.markdown('Updload a photo of an affected maize leaf.')
+st.markdown('Then click the Detect Objects button and check the result.')
 
 # Sidebar
 st.sidebar.header("ML Model Config")
