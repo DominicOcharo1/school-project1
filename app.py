@@ -80,7 +80,7 @@ if source_radio == settings.IMAGE:
         try:
             if source_img:
                 uploaded_image = PIL.Image.open(source_img)
-                st.image(source_img, caption="<h3 style='color: black;'>Uploaded Image</h3>",
+                st.image(source_img, caption=":blue[Uploaded Image]",
                          use_column_width=True)
         except Exception as ex:
             st.error("Error occurred while opening the image.")
