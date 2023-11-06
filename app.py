@@ -19,7 +19,9 @@ st.set_page_config(
 
 # Main page heading
 with st.container():
-    st.title("DL POWERED PESTS AND DISEASE DETECTION IN MAIZE", style="text-align: center;")
+    st.title("DL POWERED PESTS AND DISEASE DETECTION IN MAIZE")
+    title_div = st.div(style="text-align: center;")
+    title_div.title("Centered Title")
 
 with st.container():
     st.write("---")
