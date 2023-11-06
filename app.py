@@ -18,7 +18,7 @@ st.set_page_config(
 )
 
 # Load your background image
-background_image = 'https://images.unsplash.com/photo-1542281286-9e0a16bb7366.jpg'
+background_image = 'url("https://images.unsplash.com/photo-1542281286-9e0a16bb7366.jpg")'
 
 # Apply custom CSS to set the background image
 st.markdown(
