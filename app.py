@@ -17,21 +17,16 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Load your background image
-background_image = url("https://images.unsplash.com/photo-1542281286-9e0a16bb7366")
+page_bg_img = '''
+<style>
+body {
+background-image: url("https://images.unsplash.com/photo-1542281286-9e0a16bb7366");
+background-size: cover;
+}
+</style>
+'''
 
-# Apply custom CSS to set the background image
-st.markdown(
-    f"""
-    <style>
-    body {{
-        background-image: {background_image};
-        background-size: cover;
-    }}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+st.markdown(page_bg_img, unsafe_allow_html=True)
 
 # Main page heading
 with st.container(): # st.title("DL POWERED PESTS AND DISEASE DETECTION IN MAIZE")
