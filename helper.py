@@ -259,6 +259,7 @@ def play_uploaded_video1(conf, model):
     Raises:
         None
     """
+    video_formats = ['mp4', 'mov', 'avi']
     uploaded_video = st.file_uploader("Upload a video", video_formats)
 
     is_display_tracker, tracker = display_tracker_options()
