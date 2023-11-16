@@ -101,7 +101,8 @@ with st.container():
                         st.write("No image is uploaded yet!")
     
     elif source_radio == settings.VIDEO:
-        helper.play_stored_video(confidence, model)
+        # helper.play_stored_video(confidence, model)
+        helper.play_uploaded_video1(confidence, model)
 
     elif source_radio == settings.WEBCAM:
         helper.play_webcam(confidence, model)
