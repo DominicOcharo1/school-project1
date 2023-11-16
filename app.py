@@ -11,10 +11,9 @@ import helper
 
 import streamlit as st
 import torch
-from PIL import Image
-from pathlib import Path
-from io import BytesIO
-from torchvision.transforms import functional as F
+import cv2
+import numpy as np
+from ultralytics import YOLO
 
 # Setting page layout
 st.set_page_config(
@@ -110,70 +109,51 @@ with st.container():
         # helper.play_stored_video(confidence, model)
         
         # Load custom YOLO model
-        @st.cache(allow_output_mutation=True)
-        def load_custom_model():
-          model = torch.load(model_path)
-          return model
+        model = YOLO(model_path)
         
-        custom_model = load_custom_model()
+        # Define the video format supported
+        video_formats = ['mp4', 'mov', 'avi']
         
-        # Function to make predictions
-        def predict_video(video_file):
-          predictions = []
+        # Upload the video file
+        uploaded_file = st.file_uploader("Upload a video", video_formats)
         
-          # Process the video
-          cap = cv2.VideoCapture(video_file)
-          while True:
-            # Capture frame-by-frame
-            ret, frame = cap.read()
+        # Check if the uploaded file is a video
+        if uploaded_file is not None:
+            # Read the video file
+            video_data = uploaded_file.read()
         
-            # Resize the frame to a smaller but manageable size
-            resized_frame = cv2.resize(frame, (640, 640))
+            # Convert the video data to a byte array
+            video_bytes = bytearray(video_data)
         
-            # Make predictions on the resized frame
-            prediction = custom_model(resized_frame)
-            predictions.append(prediction)
+            # Decode the video bytes into a NumPy array
+            video_frames = cv2.imdecode(np.frombuffer(video_bytes, dtype=np.uint8), cv2.IMREAD_COLOR)
         
-            # Display the frame and predictions
-            cv2.imshow('Frame', frame)
-            if prediction:
-              print("Predictions: {}".format(prediction))
+            # Check if the video is in a supported format
+            if video_frames is None:
+                st.error("The uploaded file is not in a supported format.")
+                return
         
-            # Break the loop if 'q' key is pressed
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-              break
+            # Preprocess the video frames
+            preprocessed_frames = []
+            for frame in video_frames:
+                preprocessed_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                preprocessed_frame = cv2.resize(preprocessed_frame, (640, 640))
+                preprocessed_frame = np.asarray(preprocessed_frame)
+                preprocessed_frame = np.transpose(preprocessed_frame, (2, 0, 1))
+                preprocessed_frame = np.expand_dims(preprocessed_frame, axis=0)
+                preprocessed_frames.append(preprocessed_frame)
         
-          cap.release()
-          cv2.destroyAllWindows()  
+            # Make predictions for each frame
+            predictions = []
+            for frame in preprocessed_frames:
+                prediction = model(frame)
+                predictions.append(prediction)
         
-          return predictions
-        
-        # Streamlit app
-        def main():
-          st.title("Custom YOLO Video Prediction App")
-        
-          # Upload video file through Streamlit
-          video_file = st.file_uploader("Upload a video file", type=["mp4", "avi"])
-        
-          # Detect button
-          detect_button = st.button("Detect")
-        
-          if video_file is not None:
-            # Display the uploaded video
-            st.video(video_file)
-        
-            if detect_button:
-              # Process and make predictions on the video
-              predictions = predict_video(video_file.name)
-        
-              # Display predictions or error message
-              if predictions:
-                st.success("Predictions: {}".format(predictions))
-              else:
-                st.error("Error processing the video. Please upload a valid video file.")
-        
-        if __name__ == "__main__":
-          main()
+            # Display the predictions
+            for prediction in predictions:
+                st.write(prediction)
+        else:
+            st.info("Please upload a video file.")
 
 
     elif source_radio == settings.WEBCAM:
