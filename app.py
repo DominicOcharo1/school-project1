@@ -13,6 +13,7 @@ import streamlit as st
 from PIL import Image
 import torch
 import torchvision.transforms as transforms
+from ultralytics import YOLO
 
 # Setting page layout
 st.set_page_config(
@@ -108,7 +109,7 @@ with st.container():
         # helper.play_stored_video(confidence, model)
 
         # Load your pre-trained model
-        model = torch.load(model_path)
+        model = YOLO(model_path)
         model.eval()
         
         # Function to make predictions
