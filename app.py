@@ -15,6 +15,7 @@ from PIL import Image
 from pathlib import Path
 from io import BytesIO
 from torchvision.transforms import functional as F
+from moviepy.editor import VideoFileClip
 
 # Setting page layout
 st.set_page_config(
@@ -122,10 +123,24 @@ with st.container():
             predictions = []
         
             # Process the video
-            # You need to implement the logic for video processing and model predictions using your custom YOLO model
-            # Example: You may use a video processing library like OpenCV
-            # and pass frames through the model for predictions
-            # ...
+            if video_file:
+                try:
+                    # Use moviepy to resize the video frames
+                    video_clip = VideoFileClip(video_file)
+                    resized_clip = video_clip.resize(height=360)  # Adjust the height as needed
+                    video_frames = resized_clip.iter_frames(fps=video_clip.fps)
+        
+                    for frame in video_frames:
+                        # You need to implement the logic for model predictions using your custom YOLO model
+                        # Example: pass the frame through the YOLO model and get predictions
+                        # ...
+        
+                        # Append predictions to the list
+                        predictions.append("Example Prediction")
+        
+                except Exception as e:
+                    st.error(f"Error processing the video: {e}")
+                    return []
         
             return predictions
         
@@ -140,14 +155,16 @@ with st.container():
                 # Display the uploaded video
                 st.video(video_file)
         
-                # Process and make predictions on the video
-                predictions = predict_video(video_file)
+                # Detect button to initiate video processing
+                if st.button("Detect"):
+                    # Process and make predictions on the video
+                    predictions = predict_video(video_file)
         
-                # Display predictions or error message
-                if predictions:
-                    st.success("Predictions: {}".format(predictions))
-                else:
-                    st.error("Error processing the video. Please upload a valid video file.")
+                    # Display predictions or error message
+                    if predictions:
+                        st.success("Predictions: {}".format(predictions))
+                    else:
+                        st.error("Error processing the video. Please upload a valid video file.")
         
         if __name__ == "__main__":
             main()
