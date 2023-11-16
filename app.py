@@ -43,7 +43,9 @@ with st.container():
     st.markdown('Then click the Detect Objects button and check the result.')
 
 # Sidebar
-st.sidebar.header("ML Model Config")
+with st.container():
+    st.write("---")
+    st.header("ML Model Config")
 
 # Model Options
 model_type = st.sidebar.radio(
