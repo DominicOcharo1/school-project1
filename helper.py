@@ -81,11 +81,11 @@ def play_youtube_video(conf, model):
     Raises:
         None
     """
-    source_youtube = st.sidebar.text_input("YouTube Video url")
+    source_youtube = st.text_input("YouTube Video url")
 
     is_display_tracker, tracker = display_tracker_options()
 
-    if st.sidebar.button('Detect Objects'):
+    if st.button('Detect Objects'):
         try:
             yt = YouTube(source_youtube)
             stream = yt.streams.filter(file_extension="mp4", res=720).first()
@@ -106,7 +106,7 @@ def play_youtube_video(conf, model):
                     vid_cap.release()
                     break
         except Exception as e:
-            st.sidebar.error("Error loading video: " + str(e))
+            st.error("Error loading video: " + str(e))
 
 
 def play_rtsp_stream(conf, model):
@@ -123,9 +123,9 @@ def play_rtsp_stream(conf, model):
     Raises:
         None
     """
-    source_rtsp = st.sidebar.text_input("rtsp stream url")
+    source_rtsp = st.text_input("rtsp stream url")
     is_display_tracker, tracker = display_tracker_options()
-    if st.sidebar.button('Detect Objects'):
+    if st.button('Detect Objects'):
         try:
             vid_cap = cv2.VideoCapture(source_rtsp)
             st_frame = st.empty()
@@ -143,7 +143,7 @@ def play_rtsp_stream(conf, model):
                     vid_cap.release()
                     break
         except Exception as e:
-            st.sidebar.error("Error loading RTSP stream: " + str(e))
+            st.error("Error loading RTSP stream: " + str(e))
 
 
 
@@ -158,7 +158,7 @@ def play_webcam(conf, model):
     Raises:
         None
     """
-    st.sidebar.title("Webcam Object Detection")
+    st.title("Webcam Object Detection")
 
     webrtc_streamer(
         key="example",
@@ -210,7 +210,7 @@ def play_stored_video(conf, model):
     Raises:
         None
     """
-    source_vid = st.sidebar.selectbox(
+    source_vid = st.selectbox(
         "Choose a video...", settings.VIDEOS_DICT.keys())
 
     is_display_tracker, tracker = display_tracker_options()
@@ -220,7 +220,7 @@ def play_stored_video(conf, model):
     if video_bytes:
         st.video(video_bytes)
 
-    if st.sidebar.button('Detect Video Objects'):
+    if st.button('Detect Video Objects'):
         try:
             vid_cap = cv2.VideoCapture(
                 str(settings.VIDEOS_DICT.get(source_vid)))
@@ -239,4 +239,4 @@ def play_stored_video(conf, model):
                     vid_cap.release()
                     break
         except Exception as e:
-            st.sidebar.error("Error loading video: " + str(e))
+            st.error("Error loading video: " + str(e))
