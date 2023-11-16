@@ -68,7 +68,7 @@ with st.container():
         st.markdown('Updload a photo of an affected maize leaf, then click the Detect Objects button and check the result.')
         
         source_img = st.file_uploader(
-            "Choose an image...", type=("jpg", "jpeg", "png", 'bmp', 'webp'))
+            "Choose an image...", type=("jpg", "jpeg", "png", 'bmp', 'webp', 'mp4'))
     
         col1, col2 = st.columns(2)
     
