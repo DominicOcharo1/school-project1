@@ -10,10 +10,11 @@ import settings
 import helper
 
 import streamlit as st
-from PIL import Image
 import torch
-import torchvision.transforms as transforms
-from ultralytics import YOLO
+from PIL import Image
+from pathlib import Path
+from io import BytesIO
+from torchvision.transforms import functional as F
 
 # Setting page layout
 st.set_page_config(
@@ -107,24 +108,30 @@ with st.container():
     
     elif source_radio == settings.VIDEO:
         # helper.play_stored_video(confidence, model)
-
-        # Load your pre-trained model
-        model = YOLO(model_path)
-        model.eval()
+        
+        # Load custom YOLO model
+        @st.cache(allow_output_mutation=True)
+        def load_custom_model():
+            model = torch.load(model_path)
+            return model
+        
+        custom_model = load_custom_model()
         
         # Function to make predictions
         def predict_video(video_file):
-            # Your video processing and prediction logic here
+            predictions = []
+        
+            # Process the video
+            # You need to implement the logic for video processing and model predictions using your custom YOLO model
             # Example: You may use a video processing library like OpenCV
             # and pass frames through the model for predictions
-            predictions = []
             # ...
         
             return predictions
         
         # Streamlit app
         def main():
-            st.title("Video Prediction App")
+            st.title("Custom YOLO Video Prediction App")
         
             # Upload video file through Streamlit
             video_file = st.file_uploader("Upload a video file", type=["mp4", "avi"])
