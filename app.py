@@ -64,8 +64,8 @@ with st.container():
     source_img = None
     # If image is selected
     if source_radio == settings.IMAGE:
-        st.markdown('Updload a photo of an affected maize leaf.')
-        st.markdown('Then click the Detect Objects button and check the result.')
+        st.write("---")
+        st.markdown('Updload a photo of an affected maize leaf, then click the Detect Objects button and check the result.')
         
         source_img = st.file_uploader(
             "Choose an image...", type=("jpg", "jpeg", "png", 'bmp', 'webp'))
