@@ -81,7 +81,8 @@ def play_youtube_video(conf, model):
     Raises:
         None
     """
-    source_youtube = st.text_input("YouTube Video url")
+    st.write("---")
+    source_youtube = st.text_input("Paste the YouTube Video url below")
 
     is_display_tracker, tracker = display_tracker_options()
 
