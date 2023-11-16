@@ -269,30 +269,39 @@ def play_uploaded_video1(conf, model):
         st.video(video_bytes)
 
         if st.button('Detect Video Objects'):
+        if st.button('Detect Video Objects'):
             try:
-                # Convert video bytes to NumPy array
-                video_frames = cv2.imdecode(np.frombuffer(video_bytes, dtype=np.uint8), cv2.IMREAD_COLOR)
-
-                # Check if the video is in a supported format
-                if video_frames is None:
+                # Read video bytes
+                video_bytes = uploaded_video.read()
+        
+                # Extract file extension from filename
+                filename, file_extension = os.path.splitext(uploaded_video.name)
+        
+                # Check if file extension is supported
+                supported_formats1 = ['mp4', 'mov', 'avi']
+                if file_extension not in supported_formats1:
                     st.error("The uploaded file is not in a supported format.")
                     return
-
-                # Loop through video frames and make predictions
+        
+                # Attempt to decode video bytes using OpenCV
+                video_frames = cv2.imdecode(np.frombuffer(video_bytes, dtype=np.uint8), cv2.IMREAD_COLOR)
+        
+                # Handle decoding failure
+                if video_frames is None:
+                    st.error("Error decoding video file.")
+                    return
+        
+                # Process video frames
                 st_frame = st.empty()
                 for frame in video_frames:
-                    # Preprocess the frame
                     preprocessed_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                     preprocessed_frame = cv2.resize(preprocessed_frame, (640, 640))
                     preprocessed_frame = np.asarray(preprocessed_frame)
                     preprocessed_frame = np.transpose(preprocessed_frame, (2, 0, 1))
                     preprocessed_frame = np.expand_dims(preprocessed_frame, axis=0)
-
-                    # Make predictions
+        
                     prediction = model(preprocessed_frame)
-
-                    # Display the frame and detected objects
                     _display_detected_frames(conf, model, st_frame, frame, prediction, is_display_tracker, tracker)
-
+        
             except Exception as e:
                 st.error("Error processing the video:", e)
