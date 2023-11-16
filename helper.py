@@ -269,7 +269,6 @@ def play_uploaded_video1(conf, model):
         st.video(video_bytes)
 
         if st.button('Detect Video Objects'):
-        if st.button('Detect Video Objects'):
             try:
                 # Read video bytes
                 video_bytes = uploaded_video.read()
