@@ -19,31 +19,17 @@ st.set_page_config(
 
 # Main page heading
 with st.container(): # st.title("DL POWERED PESTS AND DISEASE DETECTION IN MAIZE")
+    st.markdown('<h1 style="color:black;">DL POWERED PESTS AND DISEASE DETECTION IN MAIZE</h1>', unsafe_allow_html=True)
     
-    st.markdown(
-        """
-        <style>
-        div[data-testid="stHorizontalBlock"] {
-            background-color: lightgrey;
-            padding: 20px;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-    st.markdown(
-        "<h1 style='text-align: center; color: blue; background-color: lightblue; padding: 20px;'>DL POWERED PESTS AND DISEASE DETECTION IN MAIZE</h1>",
-        unsafe_allow_html=True
-    )
-    st.markdown("<h2 style='text-align: center; color: black;'>By Dominic Ocharo and Shadrack Onjiri</h2>", unsafe_allow_html=True)
+    st.markdown('<h2 style="color:gray;">This detection model detects the following types of diseases in maize:</h2>', unsafe_allow_html=True)
     
-with st.container():
-    st.write("---")
-    st.markdown('Updload a photo of an affected maize leaf.')
-    st.markdown('Then click the Detect Objects button and check the result.')
+    st.markdown('<h3 style="color:gray;"> Leaf Blight, Leaf Spot, Fall Armyworm, Grasshopper</h3>', unsafe_allow_html=True)
+    
+    st.markdown("<h4 style='text-align: center; color: black;'>By Dominic Ocharo and Shadrack Onjiri</h4>", unsafe_allow_html=True)
 
 # Sidebar
 # Model Options
+st.sidebar.header("ML Model Config")
 model_type = st.sidebar.radio(
     "Select Task", ['Detection', 'Detection1'])
 
@@ -53,7 +39,6 @@ confidence = float(st.sidebar.slider(
 
 with st.container():
     st.write("---")
-    st.header("ML Model Config")
     
     # Selecting Detection1 Or Detection2
     if model_type == 'Detection':
