@@ -9,6 +9,11 @@ import streamlit as st
 import settings
 import helper
 
+import streamlit as st
+from PIL import Image
+import torch
+import torchvision.transforms as transforms
+
 # Setting page layout
 st.set_page_config(
     page_title="Plant Pests and Disease Detection",
@@ -100,7 +105,44 @@ with st.container():
                         st.write("No image is uploaded yet!")
     
     elif source_radio == settings.VIDEO:
-        helper.play_stored_video(confidence, model)
+        # helper.play_stored_video(confidence, model)
+
+        # Load your pre-trained model
+        model = torch.load(model_path)
+        model.eval()
+        
+        # Function to make predictions
+        def predict_video(video_file):
+            # Your video processing and prediction logic here
+            # Example: You may use a video processing library like OpenCV
+            # and pass frames through the model for predictions
+            predictions = []
+            # ...
+        
+            return predictions
+        
+        # Streamlit app
+        def main():
+            st.title("Video Prediction App")
+        
+            # Upload video file through Streamlit
+            video_file = st.file_uploader("Upload a video file", type=["mp4", "avi"])
+        
+            if video_file is not None:
+                # Display the uploaded video
+                st.video(video_file)
+        
+                # Process and make predictions on the video
+                predictions = predict_video(video_file)
+        
+                # Display predictions or error message
+                if predictions:
+                    st.success("Predictions: {}".format(predictions))
+                else:
+                    st.error("Error processing the video. Please upload a valid video file.")
+        
+        if __name__ == "__main__":
+            main()
 
     elif source_radio == settings.WEBCAM:
         helper.play_webcam(confidence, model)
