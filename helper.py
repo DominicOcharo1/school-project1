@@ -159,6 +159,7 @@ def play_webcam(conf, model):
     Raises:
         None
     """
+    st.write("---")
     st.title("Webcam Object Detection")
 
     webrtc_streamer(
@@ -211,6 +212,7 @@ def play_stored_video(conf, model):
     Raises:
         None
     """
+    st.write("---")
     source_vid = st.selectbox(
         "Choose a video...", settings.VIDEOS_DICT.keys())
 
