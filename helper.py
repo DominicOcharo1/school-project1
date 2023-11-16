@@ -243,3 +243,55 @@ def play_stored_video(conf, model):
                     break
         except Exception as e:
             st.error("Error loading video: " + str(e))
+
+
+def play_uploaded_video1(conf, model):
+    """
+    Plays an uploaded video file. Tracks and detects objects in real-time using the YOLOv8 object detection model.
+
+    Parameters:
+        conf: Confidence of YOLOv8 model.
+        model: An instance of the `YOLOv8` class containing the YOLOv8 model.
+
+    Returns:
+        None
+
+    Raises:
+        None
+    """
+    uploaded_video = st.file_uploader("Upload a video", video_formats)
+
+    is_display_tracker, tracker = display_tracker_options()
+
+    if uploaded_video is not None:
+        video_bytes = uploaded_video.read()
+        st.video(video_bytes)
+
+        if st.button('Detect Video Objects'):
+            try:
+                # Convert video bytes to NumPy array
+                video_frames = cv2.imdecode(np.frombuffer(video_bytes, dtype=np.uint8), cv2.IMREAD_COLOR)
+
+                # Check if the video is in a supported format
+                if video_frames is None:
+                    st.error("The uploaded file is not in a supported format.")
+                    return
+
+                # Loop through video frames and make predictions
+                st_frame = st.empty()
+                for frame in video_frames:
+                    # Preprocess the frame
+                    preprocessed_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    preprocessed_frame = cv2.resize(preprocessed_frame, (640, 640))
+                    preprocessed_frame = np.asarray(preprocessed_frame)
+                    preprocessed_frame = np.transpose(preprocessed_frame, (2, 0, 1))
+                    preprocessed_frame = np.expand_dims(preprocessed_frame, axis=0)
+
+                    # Make predictions
+                    prediction = model(preprocessed_frame)
+
+                    # Display the frame and detected objects
+                    _display_detected_frames(conf, model, st_frame, frame, prediction, is_display_tracker, tracker)
+
+            except Exception as e:
+                st.error("Error processing the video:", e)
