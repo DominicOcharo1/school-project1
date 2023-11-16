@@ -131,7 +131,6 @@ with st.container():
             # Check if the video is in a supported format
             if video_frames is None:
                 st.error("The uploaded file is not in a supported format.")
-                return
         
             # Preprocess the video frames
             preprocessed_frames = []
