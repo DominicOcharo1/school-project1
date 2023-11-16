@@ -9,12 +9,6 @@ import streamlit as st
 import settings
 import helper
 
-import streamlit as st
-import torch
-import cv2
-import numpy as np
-from ultralytics import YOLO
-
 # Setting page layout
 st.set_page_config(
     page_title="Plant Pests and Disease Detection",
@@ -106,56 +100,8 @@ with st.container():
                         st.write("No image is uploaded yet!")
     
     elif source_radio == settings.VIDEO:
-        # helper.play_stored_video(confidence, model)
-        
-        
-        # Load your best.pt model
-        model = YOLO(model_path)
-        
-        # Define the video format supported
-        video_formats = ['mp4', 'mov', 'avi']
-        
-        # Upload the video file
-        uploaded_file = st.file_uploader("Upload a video", video_formats)
-        
-        # Check if the uploaded file is a video
-        if uploaded_file is not None:
-            # Read the video file
-            video_data = uploaded_file.read()
-        
-            # Convert the video data to a byte array
-            video_bytes = bytearray(video_data)
-        
-            # Decode the video bytes into a NumPy array
-            video_frames = cv2.imdecode(np.frombuffer(video_bytes, dtype=np.uint8), cv2.IMREAD_COLOR)
-        
-            # Check if the video is in a supported format
-            if video_frames is None:
-                st.error("The uploaded file is not in a supported format.")
-        
-            # Preprocess the video frames
-            preprocessed_frames = []
-            for frame in video_frames:
-                preprocessed_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                preprocessed_frame = cv2.resize(preprocessed_frame, (640, 640))
-                preprocessed_frame = np.asarray(preprocessed_frame)
-                preprocessed_frame = np.transpose(preprocessed_frame, (2, 0, 1))
-                preprocessed_frame = np.expand_dims(preprocessed_frame, axis=0)
-                preprocessed_frames.append(preprocessed_frame)
-        
-            # Make predictions for each frame
-            predictions = []
-            for frame in preprocessed_frames:
-                prediction = model(frame)
-                predictions.append(prediction)
-        
-            # Display the predictions
-            for prediction in predictions:
-                st.write(prediction)
-        else:
-            st.info("Please upload a video file.")
+        helper.play_stored_video(confidence, model)
 
-    
     elif source_radio == settings.WEBCAM:
         helper.play_webcam(confidence, model)
     
